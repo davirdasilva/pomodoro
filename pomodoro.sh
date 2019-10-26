@@ -1,11 +1,12 @@
 #!/bin/bash
-# POMODORO in YA TerMINAL ;)
+source ~/gitrepos/opensource/progress-bar.sh/progress-bar.sh
 
 function pomo {
+    GREEN='\033[0;32m'
     RED='\033[0;31m'
-    NC='\033[0m' # No Color
+    NO_COLOR='\033[0m' # No Color
     ORANGE='\033[0;33m'
-    printf "${ORANGE}POMODORO in YA TERMINAL${NC}\n"
+    printf "${ORANGE}POMODORO${NO_COLOR}\n"
 
     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
         echo "usage: pomo       25 minute cycle"
@@ -13,7 +14,7 @@ function pomo {
         echo "Options:"
         echo "  d: timer duration in minutes"
         echo "  s: 05 minute break"
-        echo "  l:  15 minute break"
+        echo "  l: 15 minute break"
         echo "  message: Your message to display"
         return
     fi
@@ -66,14 +67,14 @@ function pomo {
         MESSAGE="Time to take a break"
     fi
 
-    echo -e "${RED}TIMER SET FOR $(($TIMER/60)) MINUTES"
+    echo -e "${GREEN}TIMER SET FOR $(($TIMER/60)) MINUTES"
 
     # LINUX users
     if [[ "$(uname)" == "Linux" ]]; then
-        eval "(sleep $TIMER && notify-send '$TITLE' '$MESSAGE' --icon=$ICON && $BEEP &)"
+        eval "(progress-bar $TIMER && notify-send '$TITLE' '$MESSAGE' --icon=$ICON && $BEEP &)"
     # MAC users
     elif [[ "$(uname)" == "Darwin" ]]; then
-        eval "(sleep $TIMER && terminal-notifier -message '$MESSAGE' -title 'Pomodoro' --subtitle '$TITLE' && $BEEP &)"
+        eval "(progress-bar $TIMER && terminal-notifier -message '$MESSAGE' -title 'Pomodoro' --subtitle '$TITLE' && $BEEP &)"
     else
         echo "Sorry! Only Linux or Mac";
     fi
