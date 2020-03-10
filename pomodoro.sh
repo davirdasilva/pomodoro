@@ -1,5 +1,4 @@
 #!/bin/bash
-source ~/gitrepos/opensource/progress-bar.sh/progress-bar.sh
 
 function pomo {
     GREEN='\033[0;32m'
